@@ -95,6 +95,23 @@
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2.4); opacity: 0; } }
         #scanning-hint p { margin: 0; font-size: 0.92em; }
 
+        /* ===== 4b. EŞLEŞME TOAST ===== */
+        #match-toast {
+            position: fixed; top: calc(20px + env(safe-area-inset-top, 0px));
+            left: 50%; transform: translateX(-50%) translateY(-100px);
+            z-index: 95;
+            background: rgba(20, 130, 80, 0.92);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 12px 20px; border-radius: 30px;
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.95em; font-weight: 600; color: white;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            opacity: 0; transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2), opacity 0.3s;
+            pointer-events: none;
+        }
+        #match-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        #match-toast .check { font-size: 1.1em; }
+
         /* ===== 5. SES BUTONU ===== */
         #audio-btn {
             position: fixed; bottom: calc(20px + env(safe-area-inset-bottom, 0px));
@@ -197,6 +214,12 @@
         </div>
     </div>
 
+    <!-- 4b. Eşleşme toast -->
+    <div id="match-toast">
+        <span class="check">✓</span>
+        <span>Görsel algılandı</span>
+    </div>
+
     <!-- 5. Ses butonu -->
     <button id="audio-btn">🔇 Sesi Aç</button>
 
@@ -226,76 +249,69 @@
              device-orientation-permission-ui="enabled: false">
 
         <a-assets timeout="5000">
-            <video id="vid1" src="media_klasoru/video1.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
-            <video id="vid2" src="media_klasoru/video2.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
-            <video id="vid3" src="media_klasoru/video3.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
-            <video id="vid4" src="media_klasoru/video4.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
-            <video id="vid5" src="media_klasoru/video5.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
-            <video id="vid6" src="media_klasoru/video6.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
-            <video id="vid7" src="media_klasoru/video7.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
-            <video id="vid8" src="media_klasoru/video8.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
-            <video id="vid9" src="media_klasoru/video9.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
+            <video id="vid1"  src="media_klasoru/video1.mp4"  loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
+            <video id="vid2"  src="media_klasoru/video2.mp4"  loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
+            <video id="vid3"  src="media_klasoru/video3.mp4"  loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
+            <video id="vid4"  src="media_klasoru/video4.mp4"  loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
+            <video id="vid5"  src="media_klasoru/video5.mp4"  loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
+            <video id="vid6"  src="media_klasoru/video6.mp4"  loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
+            <video id="vid7"  src="media_klasoru/video7.mp4"  loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
+            <video id="vid8"  src="media_klasoru/video8.mp4"  loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
+            <video id="vid9"  src="media_klasoru/video9.mp4"  loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
             <video id="vid10" src="media_klasoru/video10.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
             <video id="vid11" src="media_klasoru/video11.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
             <video id="vid12" src="media_klasoru/video12.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
             <video id="vid13" src="media_klasoru/video13.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
             <video id="vid14" src="media_klasoru/video14.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
-
-            <!-- 5️⃣6️⃣7️⃣...14️⃣ için ŞABLON (kopyala-yapıştır):
-            <video id="vid5" src="media_klasoru/video5.mp4" loop crossorigin="anonymous" playsinline webkit-playsinline muted></video>
-            -->
         </a-assets>
 
         <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-        <a-entity mindar-image-target="targetIndex: 0" class="ar-target" data-video="#vid1">
-            <a-video src="#vid1" position="0 0 0" width="1" height="1.45"></a-video>
+        <!-- height = video yüksekliği / video genişliği. Her video için ayarla.
+             16:9 yatay = 0.57 | 9:16 dikey = 1.78 | 1:1 kare = 1.0 | 4:5 dikey = 1.25
+             vid5–vid14 için height değerlerini kendi video oranlarına göre güncelle. -->
+        <a-entity mindar-image-target="targetIndex: 0"  class="ar-target" data-video="#vid1">
+            <a-video src="#vid1"  position="0 0 0" width="1" height="1.45"></a-video>
         </a-entity>
-        <a-entity mindar-image-target="targetIndex: 1" class="ar-target" data-video="#vid2">
-            <a-video src="#vid2" position="0 0 0" width="1" height="0.57"></a-video>
+        <a-entity mindar-image-target="targetIndex: 1"  class="ar-target" data-video="#vid2">
+            <a-video src="#vid2"  position="0 0 0" width="1" height="0.57"></a-video>
         </a-entity>
-        <a-entity mindar-image-target="targetIndex: 2" class="ar-target" data-video="#vid3">
-            <a-video src="#vid3" position="0 0 0" width="1" height="1.85"></a-video>
+        <a-entity mindar-image-target="targetIndex: 2"  class="ar-target" data-video="#vid3">
+            <a-video src="#vid3"  position="0 0 0" width="1" height="1.85"></a-video>
         </a-entity>
-        <a-entity mindar-image-target="targetIndex: 3" class="ar-target" data-video="#vid4">
-            <a-video src="#vid4" position="0 0 0" width="1" height="0.57"></a-video>
+        <a-entity mindar-image-target="targetIndex: 3"  class="ar-target" data-video="#vid4">
+            <a-video src="#vid4"  position="0 0 0" width="1" height="0.57"></a-video>
         </a-entity>
-        <a-entity mindar-image-target="targetIndex: 3" class="ar-target" data-video="#vid5">
-            <a-video src="#vid5" position="0 0 0" width="1" height="0.57"></a-video>
+        <a-entity mindar-image-target="targetIndex: 4"  class="ar-target" data-video="#vid5">
+            <a-video src="#vid5"  position="0 0 0" width="1" height="1.0"></a-video>
         </a-entity>
-        <a-entity mindar-image-target="targetIndex: 3" class="ar-target" data-video="#vid6">
-            <a-video src="#vid6" position="0 0 0" width="1" height="0.57"></a-video>
+        <a-entity mindar-image-target="targetIndex: 5"  class="ar-target" data-video="#vid6">
+            <a-video src="#vid6"  position="0 0 0" width="1" height="1.0"></a-video>
         </a-entity>
-        <a-entity mindar-image-target="targetIndex: 3" class="ar-target" data-video="#vid7">
-            <a-video src="#vid7" position="0 0 0" width="1" height="0.57"></a-video>
+        <a-entity mindar-image-target="targetIndex: 6"  class="ar-target" data-video="#vid7">
+            <a-video src="#vid7"  position="0 0 0" width="1" height="1.0"></a-video>
         </a-entity>
-        <a-entity mindar-image-target="targetIndex: 3" class="ar-target" data-video="#vid8">
-            <a-video src="#vid8" position="0 0 0" width="1" height="0.57"></a-video>
+        <a-entity mindar-image-target="targetIndex: 7"  class="ar-target" data-video="#vid8">
+            <a-video src="#vid8"  position="0 0 0" width="1" height="1.0"></a-video>
         </a-entity>
-        <a-entity mindar-image-target="targetIndex: 3" class="ar-target" data-video="#vid9">
-            <a-video src="#vid9" position="0 0 0" width="1" height="0.57"></a-video>
+        <a-entity mindar-image-target="targetIndex: 8"  class="ar-target" data-video="#vid9">
+            <a-video src="#vid9"  position="0 0 0" width="1" height="1.0"></a-video>
         </a-entity>
-        <a-entity mindar-image-target="targetIndex: 3" class="ar-target" data-video="#vid10">
-            <a-video src="#vid10" position="0 0 0" width="1" height="0.57"></a-video>
+        <a-entity mindar-image-target="targetIndex: 9"  class="ar-target" data-video="#vid10">
+            <a-video src="#vid10" position="0 0 0" width="1" height="1.0"></a-video>
         </a-entity>
-        <a-entity mindar-image-target="targetIndex: 3" class="ar-target" data-video="#vid11">
-            <a-video src="#vid11" position="0 0 0" width="1" height="0.57"></a-video>
+        <a-entity mindar-image-target="targetIndex: 10" class="ar-target" data-video="#vid11">
+            <a-video src="#vid11" position="0 0 0" width="1" height="1.0"></a-video>
         </a-entity>
-        <a-entity mindar-image-target="targetIndex: 3" class="ar-target" data-video="#vid12">
-            <a-video src="#vid12" position="0 0 0" width="1" height="0.57"></a-video>
+        <a-entity mindar-image-target="targetIndex: 11" class="ar-target" data-video="#vid12">
+            <a-video src="#vid12" position="0 0 0" width="1" height="1.0"></a-video>
         </a-entity>
-        <a-entity mindar-image-target="targetIndex: 3" class="ar-target" data-video="#vid13">
-            <a-video src="#vid13" position="0 0 0" width="1" height="0.57"></a-video>
+        <a-entity mindar-image-target="targetIndex: 12" class="ar-target" data-video="#vid13">
+            <a-video src="#vid13" position="0 0 0" width="1" height="1.0"></a-video>
         </a-entity>
-        <a-entity mindar-image-target="targetIndex: 3" class="ar-target" data-video="#vid14">
-            <a-video src="#vid14" position="0 0 0" width="1" height="0.57"></a-video>
+        <a-entity mindar-image-target="targetIndex: 13" class="ar-target" data-video="#vid14">
+            <a-video src="#vid14" position="0 0 0" width="1" height="1.0"></a-video>
         </a-entity>
-  
-        <!-- ŞABLON (sıradaki targetIndex'i gir):
-        <a-entity mindar-image-target="targetIndex: 4" class="ar-target" data-video="#vid5">
-            <a-video src="#vid5" position="0 0 0" width="1" height="1.0"></a-video>
-        </a-entity>
-        -->
 
     </a-scene>
 
@@ -509,6 +525,18 @@
             var targets = document.querySelectorAll('.ar-target');
             dlog('Binding ' + targets.length + ' targets');
 
+            // Eşleşme toast'u — 1.8 saniye görünüp kaybolur
+            var toastEl = $('match-toast');
+            var toastTimer = null;
+            function showMatchToast() {
+                if (!toastEl) return;
+                toastEl.classList.add('show');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(function() {
+                    toastEl.classList.remove('show');
+                }, 1800);
+            }
+
             targets.forEach(function(target) {
                 var vidSelector = target.getAttribute('data-video');
                 var videoEl = document.querySelector(vidSelector);
@@ -525,6 +553,7 @@
                     }
                     activeCount++;
                     scanHint.classList.add('hidden');
+                    showMatchToast();
 
                     var p = videoEl.play();
                     if (p && p.then) {
