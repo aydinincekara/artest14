@@ -267,50 +267,50 @@
 
         <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-        <!-- height = video yüksekliği / video genişliği. Her video için ayarla.
-             16:9 yatay = 0.57 | 9:16 dikey = 1.78 | 1:1 kare = 1.0 | 4:5 dikey = 1.25
-             vid5–vid14 için height değerlerini kendi video oranlarına göre güncelle. -->
+        <!-- height = hedef görselin yüksekliği ÷ genişliği
+             Her satırın yanındaki yorum: orijinal hedef görsel boyutu (genişlik × yükseklik)
+             Bu değerler kullanıcının ölçtüğü gerçek sergi görseli boyutlarına dayanır. -->
         <a-entity mindar-image-target="targetIndex: 0"  class="ar-target" data-video="#vid1">
-            <a-video src="#vid1"  position="0 0 0" width="1" height="1.45"></a-video>
+            <a-video src="#vid1"  position="0 0 0" width="1" height="0.981"></a-video> <!-- 952 × 934 -->
         </a-entity>
         <a-entity mindar-image-target="targetIndex: 1"  class="ar-target" data-video="#vid2">
-            <a-video src="#vid2"  position="0 0 0" width="1" height="0.57"></a-video>
+            <a-video src="#vid2"  position="0 0 0" width="1" height="0.556"></a-video> <!-- 2764 × 1536 -->
         </a-entity>
         <a-entity mindar-image-target="targetIndex: 2"  class="ar-target" data-video="#vid3">
-            <a-video src="#vid3"  position="0 0 0" width="1" height="1.85"></a-video>
+            <a-video src="#vid3"  position="0 0 0" width="1" height="0.545"></a-video> <!-- 1600 × 872 -->
         </a-entity>
         <a-entity mindar-image-target="targetIndex: 3"  class="ar-target" data-video="#vid4">
-            <a-video src="#vid4"  position="0 0 0" width="1" height="0.57"></a-video>
+            <a-video src="#vid4"  position="0 0 0" width="1" height="1.777"></a-video> <!-- 2000 × 3554 -->
         </a-entity>
         <a-entity mindar-image-target="targetIndex: 4"  class="ar-target" data-video="#vid5">
-            <a-video src="#vid5"  position="0 0 0" width="1" height="1.0"></a-video>
+            <a-video src="#vid5"  position="0 0 0" width="1" height="1.248"></a-video> <!-- 1846 × 2304 -->
         </a-entity>
         <a-entity mindar-image-target="targetIndex: 5"  class="ar-target" data-video="#vid6">
-            <a-video src="#vid6"  position="0 0 0" width="1" height="1.0"></a-video>
+            <a-video src="#vid6"  position="0 0 0" width="1" height="0.623"></a-video> <!-- 2620 × 1632 -->
         </a-entity>
         <a-entity mindar-image-target="targetIndex: 6"  class="ar-target" data-video="#vid7">
-            <a-video src="#vid7"  position="0 0 0" width="1" height="1.0"></a-video>
+            <a-video src="#vid7"  position="0 0 0" width="1" height="1.560"></a-video> <!-- 1662 × 2592 -->
         </a-entity>
         <a-entity mindar-image-target="targetIndex: 7"  class="ar-target" data-video="#vid8">
-            <a-video src="#vid8"  position="0 0 0" width="1" height="1.0"></a-video>
+            <a-video src="#vid8"  position="0 0 0" width="1" height="1.778"></a-video> <!-- 1896 × 3372 -->
         </a-entity>
         <a-entity mindar-image-target="targetIndex: 8"  class="ar-target" data-video="#vid9">
-            <a-video src="#vid9"  position="0 0 0" width="1" height="1.0"></a-video>
+            <a-video src="#vid9"  position="0 0 0" width="1" height="0.680"></a-video> <!-- 2000 × 1360 -->
         </a-entity>
         <a-entity mindar-image-target="targetIndex: 9"  class="ar-target" data-video="#vid10">
-            <a-video src="#vid10" position="0 0 0" width="1" height="1.0"></a-video>
+            <a-video src="#vid10" position="0 0 0" width="1" height="0.608"></a-video> <!-- 2630 × 1600 -->
         </a-entity>
         <a-entity mindar-image-target="targetIndex: 10" class="ar-target" data-video="#vid11">
-            <a-video src="#vid11" position="0 0 0" width="1" height="1.0"></a-video>
+            <a-video src="#vid11" position="0 0 0" width="1" height="1.334"></a-video> <!-- 1792 × 2390 -->
         </a-entity>
         <a-entity mindar-image-target="targetIndex: 11" class="ar-target" data-video="#vid12">
-            <a-video src="#vid12" position="0 0 0" width="1" height="1.0"></a-video>
+            <a-video src="#vid12" position="0 0 0" width="1" height="1.000"></a-video> <!-- 2048 × 2048 -->
         </a-entity>
         <a-entity mindar-image-target="targetIndex: 12" class="ar-target" data-video="#vid13">
-            <a-video src="#vid13" position="0 0 0" width="1" height="1.0"></a-video>
+            <a-video src="#vid13" position="0 0 0" width="1" height="1.501"></a-video> <!-- 1684 × 2528 -->
         </a-entity>
         <a-entity mindar-image-target="targetIndex: 13" class="ar-target" data-video="#vid14">
-            <a-video src="#vid14" position="0 0 0" width="1" height="1.0"></a-video>
+            <a-video src="#vid14" position="0 0 0" width="1" height="1.501"></a-video> <!-- 1684 × 2528 -->
         </a-entity>
 
     </a-scene>
